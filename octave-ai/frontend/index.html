@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Octave AI</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="./assets/styles/main.css" />
+  <link rel="stylesheet" href="./assets/styles/table.css" />
+</head>
+
+<body class="min-h-screen bg-white">
+  <!-- Main Container -->
+  <div class="max-w-4xl mx-auto px-6 py-16">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <h1 class="text-5xl font-bold text-gray-900 mb-4">Octave AI</h1>
+      <p class="text-xl text-gray-600">
+        Describe your project. Hear the perfect voice.
+      </p>
+    </div>
+
+    <!-- Input Section -->
+    <div id="inputSection" class="mb-8">
+      <div class="bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
+        <textarea id="projectDescription"
+          class="w-full h-32 p-4 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700 placeholder-gray-400"
+          placeholder="Describe your project in detail... (e.g., 'A medical appointment scheduling assistant that helps patients book appointments and check lab results')"
+          maxlength="500"></textarea>
+        <div class="flex justify-between items-center mt-4">
+          <div id="charCounter" class="text-sm text-gray-500">0/500</div>
+          <button id="findVoiceBtn"
+            class="px-6 py-3 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            disabled>
+            Find My Voice
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Section -->
+    <div id="loadingSection" class="hidden text-center py-16">
+      <div class="mb-8">
+        <div class="inline-block w-16 h-16 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
+      </div>
+
+      <div class="max-w-md mx-auto space-y-4">
+        <div id="step1" class="flex items-center p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <div
+            class="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-medium mr-3">
+            <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+          </div>
+          <span class="text-blue-700 font-medium">Analyzing Your Project</span>
+          <div class="ml-auto flex space-x-1">
+            <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+            <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+            <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+          </div>
+        </div>
+
+        <div id="step2" class="flex items-center p-4 bg-gray-50 border border-gray-200 rounded-lg opacity-50">
+          <div
+            class="w-6 h-6 bg-gray-300 text-white rounded-full flex items-center justify-center text-sm font-medium mr-3">
+            2
+          </div>
+          <span class="text-gray-600">Generating Script</span>
+        </div>
+
+        <div id="step3" class="flex items-center p-4 bg-gray-50 border border-gray-200 rounded-lg opacity-50">
+          <div
+            class="w-6 h-6 bg-gray-300 text-white rounded-full flex items-center justify-center text-sm font-medium mr-3">
+            3
+          </div>
+          <span class="text-gray-600">Creating Voice Samples</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Section -->
+    <div id="resultsSection" class="hidden">
+      <!-- Generated Script -->
+      <div id="generatedScriptCard" class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-8">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-semibold text-gray-900">
+            Generated Script
+          </h3>
+          <button id="regenerateScriptBtn"
+            class="text-blue-500 hover:text-blue-600 text-sm font-medium flex items-center">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+              </path>
+            </svg>
+            Regenerate
+          </button>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <p id="generatedText" class="text-gray-700 leading-relaxed"></p>
+        </div>
+      </div>
+
+      <!-- Voice Table -->
+      <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+        <div class="voice-table-wrapper">
+          <div class="px-6 py-4 border-b border-gray-200">
+            <div class="grid grid-cols-5 gap-4 text-sm font-medium text-gray-500 uppercase tracking-wide" style="
+                  grid-template-columns: 150px 250px 120px 120px 120px;
+                  min-width: 780px;
+                ">
+              <span>PROVIDER</span>
+              <span>VOICE</span>
+              <span>PREVIEW</span>
+              <span>COST</span>
+              <span>ACTIONS</span>
+            </div>
+          </div>
+
+          <div id="voiceTableBody">
+            <!-- Voice rows will be populated by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Inline Customization Panel -->
+        <div id="customizationPanel" class="hidden customization-panel">
+          <div class="customization-header">
+            <h3 id="customizationTitle" class="customization-title">
+              Customize Voice
+            </h3>
+            <button id="closeCustomization" class="close-customization-btn">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+          <div id="customizationContent" class="customization-content">
+            <!-- Dynamic content will be populated by JavaScript -->
+          </div>
+        </div>
+
+        <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
+          <div class="result-actions">
+            <button id="tryDifferentDescriptionBtn"
+              class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+              Try Different Description
+            </button>
+            <button id="regenerateVoicesBtn"
+              class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+              Regenerate Voices
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Files -->
+  <script src="./scripts/api.js"></script>
+  <script src="./scripts/ui.js"></script>
+  <script src="./scripts/events.js"></script>
+  <script src="./scripts/main.js"></script>
+</body>
+
+</html>
