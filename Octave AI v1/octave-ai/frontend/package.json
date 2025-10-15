@@ -1,0 +1,19 @@
+{
+    "name": "octave-ai-frontend",
+    "version": "1.0.0",
+    "description": "Octave AI - Voice Generation Frontend",
+    "main": "pages/index.html",
+    "scripts": {
+        "dev": "python -m http.server 8000",
+        "build": "echo 'Static site - no build needed'",
+        "start": "echo 'Static site deployed'"
+    },
+    "keywords": [
+        "voice",
+        "ai",
+        "tts",
+        "frontend"
+    ],
+    "author": "Octave AI Team",
+    "license": "MIT"
+}

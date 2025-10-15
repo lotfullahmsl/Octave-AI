@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Debug Elements</title>
+</head>
+
+<body>
+    <h1>Debug HTML Elements</h1>
+    <button onclick="checkElements()">Check Elements</button>
+    <div id="debugResult"></div>
+
+    <script>
+        function checkElements() {
+            const result = document.getElementById('debugResult');
+            const elements = [
+                'projectDescription',
+                'toneSelect',
+                'useCaseSelect',
+                'findVoiceBtn',
+                'charCounter'
+            ];
+
+            let html = '<h3>Element Check Results:</h3><ul>';
+
+            elements.forEach(id => {
+                const element = document.getElementById(id);
+                const exists = element !== null;
+                const hasValue = exists && element.value !== undefined;
+
+                html += `<li><strong>${id}:</strong> ${exists ? '✅ EXISTS' : '❌ MISSING'}`;
+                if (exists && hasValue) {
+                    html += ` (value: "${element.value}")`;
+                }
+                html += '</li>';
+            });
+
+            html += '</ul>';
+            result.innerHTML = html;
+        }
+
+        // Auto-check on load
+        window.addEventListener('load', checkElements);
+    </script>
+</body>
+
+</html>
