@@ -67,4 +67,4 @@ FLASK_ENV=production
 
 Your AI voice comparison tool is ready for users! The app successfully generates AI-optimized scripts and provides comprehensive voice recommendations across multiple TTS providers.
 
-**Built with ❤️ using AI-powered development**
+**Built By Lotfullah Muslimwal and Shawkat Muslimwal**
