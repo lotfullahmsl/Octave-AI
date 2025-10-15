@@ -44,23 +44,24 @@ class LLMService:
         
         try:
             prompt = f"""
-            Project Description: {description}
+            AI Voice Agent Description: {description}
             Voice Requirements: {meta_prompt}
-            
-            Generate a professional, engaging script for this project. The script should:
-            1. Be 2-3 sentences long (perfect for voice demos)
-            2. Match the tone and style indicated in the voice requirements
-            3. Be suitable for text-to-speech conversion
-            4. Sound natural and conversational
-            5. Represent the project's purpose clearly
-            
-            Return only the script text, nothing else.
+
+            Generate a realistic conversation sample that this AI voice agent would say during a typical interaction. The script should:
+            1. Be 2-4 sentences long (perfect for voice evaluation)
+            2. Sound like actual dialogue the AI agent would speak to users
+            3. Match the tone and style indicated in the voice requirements
+            4. Include natural conversational elements (greetings, transitions, or responses)
+            5. Be representative of how the agent would actually communicate in its role
+            6. Be suitable for text-to-speech conversion
+
+            Return only the conversation sample text that the AI agent would speak, nothing else.
             """
             
             response = self.groq_client.chat.completions.create(
                 model="llama-3.1-8b-instant",
                 messages=[
-                    {"role": "system", "content": "You are a professional script writer specializing in TTS content. Generate natural, engaging scripts."},
+                    {"role": "system", "content": "You are an expert at creating realistic AI voice agent dialogue samples. Generate natural, authentic conversation snippets that sound exactly like what an AI agent would say during real interactions."},
                     {"role": "user", "content": prompt}
                 ],
                 max_tokens=200,
